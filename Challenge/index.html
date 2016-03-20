@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Challenge</title>
+    <link rel="stylesheet" href="css/codemirror.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="js/codemirror.js"></script>
+    <script type="text/javascript" src="js/mode/javascript.js"></script>
+    <script src="js/addon/edit/matchbrackets.js"></script>
+    <script src="js/addon/comment/continuecomment.js"></script>
+    <script src="js/addon/comment/comment.js"></script>
+</head>
+<body>
+    <div class="bodyWrapper">
+        <div id="navigationDrawer">
+            <div class="navigationItem active" id="openChallengeItem">Open Challenge</div>
+            <div class="navigationItem" id="newChallengeItem">New Challenge</div>
+            <div class="navigationItem" id="oldChallengeItem">Old Challenges</div>
+            <div class="navigationItem" id="leaderboardItem">Leaderboard</div>
+        </div>
+        <div id="challengeEditor">
+            <div id="openChallengeWrapper" class="clwrapper active">
+                <h3>Challenge</h3>
+                <div id="openClQues" class="codeEditor"></div>
+                <h3>Solution</h3>
+                <div id="openClSol" class="codeEditor"></div>
+                <div class="buttonWrapper">
+                    <button id="submitSol" onclick="submitSol()">Submit</button>
+                    <button id="resetSol" onclick="resetSol()">Reset</button>
+                </div>
+            </div>
+            <div id="newChallengeWrapper" class="clwrapper">
+                <h3>Challenge</h3>
+                <div id="newClQues" class="codeEditor"></div>
+                <div class="buttonWrapper">
+                    <button id="submitQues" onclick="submitQues()">Submit</button>
+                    <button id="resetQues" onclick="resetQues()">Reset</button>
+                </div>
+            </div>
+            <div id='oldChallengeWrapper' class="clwrapper">
+                <div id="oldChallengeListWrapper" class="oldClChild active">
+                    <ul id="oldChallengeList">
+
+                    </ul>
+                </div>
+                <div id="oldChallenge" class="oldClChild">
+                    <div id="backTOClList" onclick="showOldClList()"></div>
+                    <h3>Challenge</h3>
+                    <div id="oldClQues" class="codeEditor"></div>
+                    <h3>Solution</h3>
+                    <div id="oldClSol" class="codeEditor"></div>
+                </div>
+            </div>
+        </div>
+        <div id="challengeSubmissions">
+            <h3>Successful Submissions</h3>
+            <ul id="submissionList"></ul>
+            <div id="noSubmissions">No Submissions Yet</div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
