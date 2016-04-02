@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Code Challenge</title>
+    <link rel="stylesheet" href="css/codemirror.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script type="text/javascript" src="js/codemirror.js"></script>
+    <script type="text/javascript" src="js/mode/javascript.js"></script>
+    <script src="js/addon/edit/matchbrackets.js"></script>
+    <script src="js/addon/comment/continuecomment.js"></script>
+    <script src="js/addon/comment/comment.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <!--Title Bar-->
+    <div id="pagetitle">
+        <div class="titleWrapper">
+            <div id="title">CodeChallenge</div>
+            <ul id="titleList">
+                <li id="challengesListItem" class="titleListItem" >Challenges</li>
+                <li id="leaderboardListItem" class="titleListItem" >Leaderboard</li>
+                <li id="profileListItem" class="titleListItem" >Profile</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="bodyWrapper">
+
+        <div id="challengeWrapper" class="pageBlock active">
+
+            <div id="navigationDrawer">
+                <div class="navigationItem active" id="openChallengeItem">Active Challenges</div>
+                <div class="navigationItem" id="oldChallengeItem">Archived Challenges</div>
+                <div class="navigationItem" id="newChallengeItem">Post New Challenge</div>
+                <div class="navigationItem" id="postedChallengesItem">Your Challenges</div>
+            </div>
+
+            <div id="challengeEditor">
+
+                <div id="openChallengeWrapper" class="clwrapper active">
+                    <div id="openChallengeListWrapper" class="openClChild active">
+                        <div id="openChallengeListTitle" class="challengeTitle">Active Challenges</div>
+                        <ul id="openChallengeList">
+
+                        </ul>
+                    </div>
+                    <div id="openChallenge" class="openClChild">
+                        <div id="backToOpenClList" onclick="showOpenClList()"></div>
+                        <div class="challengeTitleWrapper">
+                            <div id="openChallengeTitle" class="challengeTitle floatTitle">Challenge#3</div>
+                            <!--<div class="challengeTitleTabLayout">-->
+                                <!--<ul class="challengeOptions">-->
+                                    <!--<li id="showOpenChallengeOption" class="challengeOption active">Challenge</li>-->
+                                    <!--<li id="showOpenChallengeCommentsOption" class="challengeOption">Comments</li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                        </div>
+                        <div id="openChallengeQuesWrapper" class="challengeInfoBlockWrapper active">
+                            <div id="openClQues" class="codeEditor"></div>
+                            <div class="challengeTitle">Solution</div>
+                            <div id="openClSol" class="codeEditor"></div>
+                            <div class="buttonWrapper">
+                                <div id="resetSol" class="button" onclick="resetSol()">Reset</div>
+                                <div id="submitSol" class="button" onclick="submitSol()">Submit</div>
+                            </div>
+                        </div>
+                        <div id="openClCommentsWrapper" class="challengeInfoBlockWrapper">
+                            <div class="challengeTitle">Comments</div>
+                            <ul id="openClCommentsList">
+
+                            </ul>
+                            <div>
+                                <textarea id="openClComment" class="commentTextArea"></textarea>
+                                <div class="buttonWrapper">
+                                    <div id="resetComment" class="button" onclick="resetOpenClComment()">Reset</div>
+                                    <div id="submitComent" class="button" onclick="submitOpenClComment()">Submit</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id='oldChallengeWrapper' class="clwrapper">
+                    <div id="oldChallengeListWrapper" class="oldClChild active">
+                        <div id="oldChallengeListTitle" class="challengeTitle">Old Challenges</div>
+                        <ul id="oldChallengeList">
+
+                        </ul>
+                    </div>
+                    <div id="oldChallenge" class="oldClChild">
+                        <div id="backTOClList" onclick="showOldClList()"></div>
+                        <div class="challengeTitleWrapper">
+                            <div class="challengeTitle floatTitle" id="oldChallengeTitle">Challenge</div>
+                            <!--<div class="challengeTitleTabLayout">-->
+                                <!--<ul class="challengeOptions">-->
+                                    <!--<li id="showOldChallengeOption" class="challengeOption active" onclick="showOldChallenge()">Challenge</li>-->
+                                    <!--<li id="showOldChallengeCommentsOption" class="challengeOption" onclick="showOldClComments()">Comments</li>-->
+                                <!--</ul>-->
+                            <!--</div>-->
+                        </div>
+                        <div id="oldChallengeQuesWrapper" class="challengeInfoBlockWrapper">
+                            <div id="oldClQues" class="codeEditor"></div>
+                            <div class="challengeTitle">Solution</div>
+                            <div id="oldClSol" class="codeEditor"></div>
+                        </div>
+                        <div id="oldClCommentsWrapper" class="challengeInfoBlockWrapper">
+                            <div class="challengeTitle">Comments</div>
+                            <ul id="oldClCommentsList">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div id="newChallengeWrapper" class="clwrapper">
+                    <div class="challengeTitleWrapper">
+                        <div class="challengeTitle floatTitle" id="newChallengeTitle">Challenge</div>
+                        <div class="challengeTitleTabLayout">
+                            <select name="filetype" id="challengeType" class="challengeMode" onchange="changePostChallengeEditMode()">
+                                <option value="auto">Auto Detect Type</option>
+                                <option value="text">Plain Text</option>
+                                <option value="-">-</option>
+                                <option value="applescript">AppleScript</option>
+                                <option value="boxnote">BoxNote</option>
+                                <option value="c">C</option>
+                                <option value="csharp">C#</option>
+                                <option value="cpp">C++</option>
+                                <option value="css">CSS</option>
+                                <option value="csv">CSV</option>
+                                <option value="clojure">Clojure</option>
+                                <option value="coffeescript">CoffeeScript</option>
+                                <option value="cfm">Cold Fusion</option>
+                                <option value="d">D</option>
+                                <option value="dart">Dart</option>
+                                <option value="diff">Diff</option>
+                                <option value="dockerfile">Docker</option>
+                                <option value="erlang">Erlang</option>
+                                <option value="fsharp">F#</option>
+                                <option value="fortran">Fortran</option>
+                                <option value="go">Go</option>
+                                <option value="groovy">Groovy</option>
+                                <option value="html">HTML</option>
+                                <option value="handlebars">Handlebars</option>
+                                <option value="haskell">Haskell</option>
+                                <option value="haxe">Haxe</option>
+                                <option value="java">Java</option>
+                                <option value="javascript">JavaScript/JSON</option>
+                                <option value="kotlin">Kotlin</option>
+                                <option value="latex">LaTeX/sTeX</option>
+                                <option value="lisp">Lisp</option>
+                                <option value="lua">Lua</option>
+                                <option value="matlab">MATLAB</option>
+                                <option value="mumps">MUMPS</option>
+                                <option value="markdown">Markdown (raw)</option>
+                                <option value="ocaml">OCaml</option>
+                                <option value="objc">Objective-C</option>
+                                <option value="php">PHP</option>
+                                <option value="pascal">Pascal</option>
+                                <option value="perl">Perl</option>
+                                <option value="pig">Pig</option>
+                                <option value="post">Post</option>
+                                <option value="powershell">Powershell</option>
+                                <option value="puppet">Puppet</option>
+                                <option value="python">Python</option>
+                                <option value="r">R</option>
+                                <option value="ruby">Ruby</option>
+                                <option value="rust">Rust</option>
+                                <option value="sql">SQL</option>
+                                <option value="sass">Sass</option>
+                                <option value="scala">Scala</option>
+                                <option value="scheme">Scheme</option>
+                                <option value="shell">Shell</option>
+                                <option value="smalltalk">Smalltalk</option>
+                                <option value="swift">Swift</option>
+                                <option value="tsv">TSV</option>
+                                <option value="vb">VB.NET</option>
+                                <option value="vbscript">VBScript</option>
+                                <option value="velocity">Velocity</option>
+                                <option value="verilog">Verilog</option>
+                                <option value="xml">XML</option>
+                                <option value="yaml">YAML</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="newClQues" class="codeEditor"></div>
+                    <div class="buttonWrapper">
+                        <div id="resetQues" class="button" onclick="resetQues()">Reset</div>
+                        <div id="submitQues" class="button" onclick="submitQues()">Submit</div>
+                    </div>
+                </div>
+
+
+                <div id="postedChallengesWrapper" class="clwrapper">
+                    <div id="postedChallengeListWrapper" class="postedClChild active">
+                        <div id="postedChallengeListTitle" class="challengeTitle">Your Challenges</div>
+                        <ul id="postedChallengeList">
+
+                        </ul>
+                    </div>
+                    <div id="postedChallenge" class="postedClChild">
+                        <div id="backTOPostedClList" onclick="showPostedClList()"></div>
+                        <div class="challengeTitleWrapper">
+                            <div class="challengeTitle floatTitle" id="postedChallengeTitle">Challenge</div>
+                            <div class="challengeTitleTabLayout">
+                                <ul class="challengeOptions">
+                                    <li id="showPostedChallengeOption" class="challengeOption active" onclick="showPostedChallenge()">Challenge</li>
+                                    <!--<li id="showPostedChallengeCommentsOption" class="challengeOption" onclick="showPostedClComments()">Comments</li>-->
+                                    <li id="showPostedChallengeSubmissionsOption" class="challengeOption" onclick="showPostedClSubmissions()">Submissions</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="postedChallengeWrapper" class="challengeBlockWrapper active">
+                            <div id="postedChallengeQuesWrapper" class="challengeInfoBlockWrapper">
+                                <div id="postedClQues" class="codeEditor"></div>
+                                <div class="challengeTitle">Solution</div>
+                                <div id="postedClSol" class="codeEditor"></div>
+                                <div class="buttonWrapper">
+                                    <div id="resetPostSolution" class="button" onclick="resetPostSol()">Reset</div>
+                                    <div id="postSolution" class="button" onclick="postSol()">Submit</div>
+                                </div>
+                            </div>
+                            <div id="postedClCommentsWrapper" class="challengeInfoBlockWrapper">
+                                <div class="challengeTitle">Comments</div>
+                                <ul id="postedClCommentsList">
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="submittedSolutionsWrapper" class="challengeBlockWrapper">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="challengeSubmissions">
+                <div id="submissionListTitle">Successful Submissions</div>
+                <div id="submissionListWrapper">
+                    <ul id="submissionList">
+
+                    </ul>
+                </div>
+                <div id="noSubmissions">No Submissions Yet</div>
+            </div>
+
+        </div>
+
+        <div id="leaderboardWrapper" class="pageBlock">
+            <div id="leaderboardTitle">Leaderboard</div>
+            <table id="leaderboardTable">
+                <colgroup>
+                    <col style="width:20%">
+                    <col style="width:60%">
+                    <col style="width:20%">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Challenger</th>
+                        <th>Answers</th>
+                    </tr>
+                    <tr>
+                        <td>Rank</td>
+                        <td>Challenger</td>
+                        <td>Answers</td>
+                    </tr>
+                    <tr>
+                        <td>Rank</td>
+                        <td>Challenger</td>
+                        <td>Answers</td>
+                    </tr>
+                    <tr>
+                        <td>Rank</td>
+                        <td>Challenger</td>
+                        <td>Answers</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="profileWrapper" class="pageBlock">
+            <div id="profileTitle">Profile</div>
+            <table id="profileTable">
+                <colgroup>
+                    <col style="width:20%">
+                    <col style="width:80%">
+                </colgroup>
+                <tbody>
+                <tr>
+                    <td>Name:</td>
+                    <td>Manga Venkatesh</td>
+                </tr>
+                <tr>
+                    <td>Score:</td>
+                    <td>13</td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="logoutBtn" class="button">Logout</div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="js/index.js"></script>
+</body>
+</html>
